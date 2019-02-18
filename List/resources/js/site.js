@@ -1,7 +1,30 @@
 ﻿let items = [];
 
+function generateTable() {
+    let div = $("#table-area");
+    div.children().remove(); // removes all children
+
+    let table = document.createElement("table");
+    table.classList.add("table");
+    table.classList.add("table-striped");
+    table.classList.add("table-bordered");
+    table.classList.add("table-hover");
+    div.append(table);
+
+    let tBody = table.appendChild(document.createElement("tbody"));
+    for (let i = 0; i < items.length; i++) {
+        let row = tBody.insertRow(-1);
+
+        row.insertCell(-1).innerText = items[i].field1;
+        row.insertCell(-1).innerText = items[i].field2;
+        row.insertCell(-1).appendChild(getButton("remove", i));
+        row.insertCell(-1).appendChild(getButton("up", i));
+        row.insertCell(-1).appendChild(getButton("down", i));
+    }
+}
+
 function addItem() {
-    let item = {field1: document.getElementById("field1").value, field2: document.getElementById("field2").value};
+    let item = {field1: $("#field1").val(), field2: $("#field2").val()};
     items.push(item);
     console.log(items);
     generateTable();
@@ -32,49 +55,31 @@ function moveDown(index) {
     generateTable();
 }
 
-function generateTable() {
-    let div = document.getElementById("table-area");
-    while (div.firstChild) div.removeChild(div.firstChild); // removes all children
+function getButton(type, index) {
+    let button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.classList.add("btn");
 
-    let table = document.createElement("table");
-    table.classList.add("table");
-    table.classList.add("table-striped");
-    table.classList.add("table-bordered");
-    table.classList.add("table-hover");
-    // table.classList.add("table-sm");
-    div.appendChild(table);
-    let tBody = table.appendChild(document.createElement("tbody"));
-    for (let i = 0; i < items.length; i++) {
-        let row = tBody.insertRow(-1);
-
-
-        let removeButton = document.createElement("button");
-        removeButton.setAttribute("type", "button");
-        removeButton.addEventListener("click", () => removeItem(i));
-        removeButton.classList.add("btn");
-        removeButton.classList.add("btn-danger");
-        removeButton.innerText = "Remove";
-
-        let upButton = document.createElement("button");
-        upButton.setAttribute("type", "button");
-        upButton.addEventListener("click", () => moveUp(i));
-        upButton.classList.add("btn");
-        upButton.classList.add("btn-info");
-        upButton.innerText = "Up";
-
-        let downButton = document.createElement("button");
-        downButton.setAttribute("type", "button");
-        downButton.addEventListener("click", () => moveDown(i));
-        downButton.classList.add("btn");
-        downButton.classList.add("btn-info");
-        downButton.innerText = "Down";
-
-        row.insertCell(-1).innerText = items[i].field1;
-        row.insertCell(-1).innerText = items[i].field2;
-        row.insertCell(-1).appendChild(removeButton);
-        row.insertCell(-1).appendChild(upButton);
-        row.insertCell(-1).appendChild(downButton);
+    switch (type) {
+        case "remove":
+            button.addEventListener("click", () => removeItem(index));
+            button.classList.add("btn-danger");
+            button.innerText = "Remove";
+            break;
+        case "up":
+            button.addEventListener("click", () => moveUp(index));
+            button.classList.add("btn-info");
+            button.innerText = "Move up";
+            break;
+        case "down":
+            button.addEventListener("click", () => moveDown(index));
+            button.classList.add("btn-info");
+            button.innerText = "Move down";
+            break;
+        default:
+            throw "Wrong type";
     }
+    return button;
 }
 
 
