@@ -5,19 +5,24 @@
     <title>Title</title>
     <link rel="stylesheet" href="resources/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="resources/css/site.css" />
+    <link rel="stylesheet" href="resources/jquery-ui-1.12.1/jquery-ui.css"/>
 </head>
 <body class="container">
-<h1 id="title">Hello list!</h1>
+<h1 id="title">Hello list 2!</h1>
 <form>
-    <input type="text" id="field1">
-    <input type="text" id="field2">
-    <input type="button" value="Insert"  class="btn btn-success" onclick="addItem()">
+    <input type="text" id="field1"/>
+    <input type="text" id="field2"/>
+    <input id="addButton" type="button" value="Insert"  class="btn btn-success" />
 </form>
-<div id="table-area">
+<div>
+    <ul id="list">
+
+    </ul>
 </div>
 </body>
 
 <script src="resources/lib/jquery/dist/jquery.js"></script>
+<script src="resources/jquery-ui-1.12.1/jquery-ui.js"></script>
 <script src="resources/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="resources/js/site.js"></script>
 </html>
